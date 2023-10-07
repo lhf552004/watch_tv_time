@@ -1,0 +1,30 @@
+[
+  {
+    "name": "fudan-pc",
+    "ip": "192.168.1.101",
+    "periods": [
+      {
+        "startTime": "17:00",
+        "endTime": "19:00"
+      },
+      {
+        "startTime": "21:30",
+        "endTime": "22:30"
+      }
+    ]
+  },
+  {
+    "name": "AllenPC",
+    "ip": "192.168.1.102",
+    "periods": [
+      {
+        "startTime": "17:00",
+        "endTime": "19:00"
+      },
+      {
+        "startTime": "21:30",
+        "endTime": "22:30"
+      }
+    ]
+  }
+]

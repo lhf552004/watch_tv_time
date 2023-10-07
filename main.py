@@ -18,12 +18,14 @@ def fetch_json_from_github(url):
 def is_time_within_period(start, end, check_time):
     start_time = datetime.datetime.strptime(start, "%H:%M").time()
     end_time = datetime.datetime.strptime(end, "%H:%M").time()
+    print(f"start: {start_time} end: {end_time} check_time: {check_time}")
     return start_time <= check_time <= end_time
 
 def should_shutdown(computers_data, computer_name):
     current_time = datetime.datetime.now().time()
     for computer in computers_data:
         if computer['name'] == computer_name:
+            print(f"PC is found by name {computer_name}")
             for period in computer['periods']:
                 if is_time_within_period(period['startTime'], period['endTime'], current_time):
                     return True

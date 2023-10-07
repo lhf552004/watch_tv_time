@@ -41,7 +41,8 @@ def main():
 
     if should_shutdown(computers_data, computer_name):
         print("Shutting down...")
-        os.system('shutdown now -h')
+        # os.system('shutdown now -h')
+        os.system('shutdown /s /t 1')
 
 if __name__ == "__main__":
     main()

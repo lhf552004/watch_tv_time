@@ -23,10 +23,12 @@ def is_time_within_period(start, end, check_time):
 
 def should_shutdown(computers_data, computer_name):
     current_time = datetime.datetime.now().time()
+    current_day = datetime.datetime.now().strftime('%A')
+    print(f"Current_day: {current_day}")
     for computer in computers_data:
         if computer['name'] == computer_name:
             print(f"PC is found by name {computer_name}")
-            for period in computer['periods']:
+            for period in computer['schedule'][current_day]:
                 if is_time_within_period(period['startTime'], period['endTime'], current_time):
                     return True
     return False

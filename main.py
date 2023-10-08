@@ -4,6 +4,7 @@ import datetime
 import os
 import socket
 from dotenv import load_dotenv
+import time
 
 # Load the .env file
 load_dotenv()
@@ -37,18 +38,21 @@ def should_shutdown(computers_data, computer_name):
     return False
 
 def main():
-    computers_data = fetch_json_from_github(GITHUB_RAW_URL)
+    while True:
+        computers_data = fetch_json_from_github(GITHUB_RAW_URL)
 
-    print(computers_data)
+        print(computers_data)
 
-    computer_name = socket.gethostname()
-    print(computer_name)
+        computer_name = socket.gethostname()
+        print(computer_name)
 
-    if should_shutdown(computers_data, computer_name):
-        print("Shutting down...")
-        # os.system('shutdown now -h')
-        os.system('shutdown /s /t 1')
-    print("PC is not shutdown, end.")
+        if should_shutdown(computers_data, computer_name):
+            print("Shutting down...")
+            # os.system('shutdown now -h')
+            os.system('shutdown /s /t 1')
+        print("PC is not shutdown, end.")
+
+        time.sleep(60)  # wait for 60 seconds (1 minute) before checking again
 
 if __name__ == "__main__":
     main()

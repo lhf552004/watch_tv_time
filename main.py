@@ -25,12 +25,15 @@ def should_shutdown(computers_data, computer_name):
     current_time = datetime.datetime.now().time()
     current_day = datetime.datetime.now().strftime('%A')
     print(f"Current_day: {current_day}")
+    print(f"Current_time: {current_time}")
     for computer in computers_data:
         if computer['name'] == computer_name:
             print(f"PC is found by name {computer_name}")
-            for period in computer['schedule'][current_day]:
+            todays_schedule = computer['schedule'].get(current_day, [])
+            for period in todays_schedule:
                 if is_time_within_period(period['startTime'], period['endTime'], current_time):
                     return True
+    print("The time is not in schedule.")
     return False
 
 def main():
@@ -45,6 +48,7 @@ def main():
         print("Shutting down...")
         # os.system('shutdown now -h')
         os.system('shutdown /s /t 1')
+    print("PC is not shutdown, end.")
 
 if __name__ == "__main__":
     main()

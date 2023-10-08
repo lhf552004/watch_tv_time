@@ -10,27 +10,47 @@
         },
         {
           "startTime": "21:30",
-          "endTime": "16:00"
+          "endTime": "22:30"
         }
       ],
       "Tuesday": [
         {
-          "startTime": "09:00",
-          "endTime": "11:00"
+          "startTime": "17:00",
+          "endTime": "19:00"
         },
         {
-          "startTime": "14:00",
-          "endTime": "16:00"
+          "startTime": "21:30",
+          "endTime": "22:30"
         }
       ],
-      "Sunday": [
+      "Wednesday": [
         {
-          "startTime": "09:00",
-          "endTime": "11:00"
+          "startTime": "17:00",
+          "endTime": "19:00"
         },
         {
-          "startTime": "14:00",
-          "endTime": "16:00"
+          "startTime": "21:30",
+          "endTime": "22:30"
+        }
+      ],
+      "Thursday": [
+        {
+          "startTime": "17:00",
+          "endTime": "19:00"
+        },
+        {
+          "startTime": "21:30",
+          "endTime": "22:30"
+        }
+      ],
+      "Friday": [
+        {
+          "startTime": "17:00",
+          "endTime": "19:00"
+        },
+        {
+          "startTime": "21:30",
+          "endTime": "22:30"
         }
       ]
     }
@@ -46,27 +66,47 @@
         },
         {
           "startTime": "21:30",
-          "endTime": "16:00"
+          "endTime": "22:30"
         }
       ],
       "Tuesday": [
         {
-          "startTime": "09:00",
-          "endTime": "11:00"
+          "startTime": "17:00",
+          "endTime": "19:00"
         },
         {
-          "startTime": "14:00",
-          "endTime": "16:00"
+          "startTime": "21:30",
+          "endTime": "22:30"
         }
       ],
-      "Sunday": [
+      "Wednesday": [
         {
-          "startTime": "09:00",
-          "endTime": "11:00"
+          "startTime": "17:00",
+          "endTime": "19:00"
         },
         {
-          "startTime": "14:00",
-          "endTime": "16:00"
+          "startTime": "21:30",
+          "endTime": "22:30"
+        }
+      ],
+      "Thursday": [
+        {
+          "startTime": "17:00",
+          "endTime": "19:00"
+        },
+        {
+          "startTime": "21:30",
+          "endTime": "22:30"
+        }
+      ],
+      "Friday": [
+        {
+          "startTime": "17:00",
+          "endTime": "19:00"
+        },
+        {
+          "startTime": "21:30",
+          "endTime": "22:30"
         }
       ]
     }

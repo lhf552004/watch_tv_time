@@ -1,3 +1,4 @@
 wtenv/
 build/
+dist/
 *.spec

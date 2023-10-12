@@ -56,7 +56,7 @@
     }
   },
   {
-    "name": "AllenPC2",
+    "name": "AllenPC",
     "ip": "192.168.1.102",
     "schedule": {
       "Monday": [

@@ -22,7 +22,7 @@ In Linux
 
 ### Package it into exe
 
-`pyinstaller --onefile main.py`
+`pyinstaller --onefile --noconsole main.py`
 
 ## Use
 

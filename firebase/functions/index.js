@@ -5,6 +5,8 @@ const functions = require("firebase-functions");
 
 const db = admin.firestore();
 
+const cors = require("cors")({ origin: true });
+
 module.exports.getAllComputers = functions.https.onCall(
   async (data, context) => {
     try {
@@ -52,42 +54,36 @@ module.exports.addComputer = functions.https.onCall(async (data, context) => {
   }
 });
 
-module.exports.getComputerByName = functions.https.onCall(
-  async (data, context) => {
+module.exports.getComputerByName = functions.https.onRequest((req, res) => {
+  return cors(req, res, async () => {
     try {
-      if (!data.computerName) {
-        throw new functions.https.HttpsError(
-          "invalid-argument",
-          "Please provide a computer name."
-        );
+      console.log(req);
+      const { computerName } = req.body;
+      if (!computerName) {
+        return res.status(400).send({
+          error: "Please provide a computer name.",
+        });
       }
 
       const snapshot = await db
         .collection("computers")
-        .where("computerName", "==", data.computerName)
+        .where("computerName", "==", computerName)
         .get();
 
       if (snapshot.empty) {
-        throw new functions.https.HttpsError(
-          "not-found",
-          "No record found for the given computer name."
-        );
+        return res.status(404).send({
+          error: "No record found for the given computer name.",
+        });
       }
 
-      // Return the first match (assuming computer names are unique)
       const record = snapshot.docs[0];
-      return { id: record.id, ...record.data() };
+      res.status(200).send({ id: record.id, ...record.data() });
     } catch (error) {
-      if (error instanceof functions.https.HttpsError) {
-        throw error;
-      }
-      throw new functions.https.HttpsError(
-        "internal",
-        "Error fetching record by name: " + error.toString()
-      );
+      console.error(error);
+      res.status(500).send({ error: error.toString() });
     }
-  }
-);
+  });
+});
 
 module.exports.updateComputers = functions.firestore
   .document("/computers/{computer}")

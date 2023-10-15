@@ -1,5 +1,7 @@
 import { Box, Flex, Text, Link, VStack, Spacer } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
+import LogoutButton from "../components/auth/LogoutButton";
+import HideIfNotAdmin from "../components/auth/HideIfNotAdmin";
 
 function Navbar({ children }) {
   return (
@@ -34,18 +36,18 @@ function Navbar({ children }) {
 
       {/* ...other links */}
       <Spacer />
+      <HideIfNotAdmin>
+        <Link
+          as={RouterLink}
+          to="/admin"
+          color="white"
+          _hover={{ textDecoration: "underline" }}
+        >
+          User Management
+        </Link>
+      </HideIfNotAdmin>
 
-      <Link
-        as={RouterLink}
-        to="/admin"
-        color="white"
-        _hover={{ textDecoration: "underline" }}
-      >
-        User Management
-      </Link>
-      <Link color="white" _hover={{ textDecoration: "underline" }}>
-        Logout
-      </Link>
+      <LogoutButton />
     </VStack>
   );
 }

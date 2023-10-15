@@ -14,14 +14,17 @@ const routes = [
   {
     path: "/",
     element: <Layout></Layout>,
+    children: [
+      {
+        path: "computers",
+        element: <ComputersComponent />,
+      },
+      // Add other child routes as needed
+    ],
   },
   {
     path: "admin",
     element: <Main></Main>,
-  },
-  {
-    path: "computers",
-    element: <ComputersComponent />,
   },
 ];
 

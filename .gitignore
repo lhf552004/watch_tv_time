@@ -2,3 +2,5 @@ wtenv/
 build/
 dist/
 *.spec
+
+node_modules/

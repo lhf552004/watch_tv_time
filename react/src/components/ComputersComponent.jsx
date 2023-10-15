@@ -20,11 +20,14 @@ import ModalContainer from "../containers/ModalContainer";
 import { MdCheckCircle, MdEdit } from "react-icons/md";
 import { IconButton } from "@chakra-ui/react";
 import ConfirmModal from "./ConfirmModal";
-import ComputerForm from "./modals/ComputerForm";
+import ComputerForm from "./form/ComputerForm";
+import ScheduleForm from "./form/ScheduleForm";
 
 function ComputersComponent() {
   const [open, setOpen] = useState(false);
   const [editValue, setEditValue] = useState(false);
+  // New state to keep track of the edit type
+  const [editType, setEditType] = useState(null); // 'computer' or 'schedule'
 
   const functions = useFunctions();
   const firestore = useFirestore();
@@ -49,13 +52,20 @@ function ComputersComponent() {
     }
   };
 
-  const handleEditClick = (rowId) => {
+  const handleEditComputerClick = (rowId) => {
+    handleEditClick(rowId, "computer");
+  };
+
+  const handleEditScheduleClick = (rowId) => {
+    handleEditClick(rowId, "schedule");
+  };
+
+  const handleEditClick = (rowId, type) => {
     const value = computers.filter((row) => row.id === rowId);
     if (value.length) {
       setOpen(true);
-      setEditValue({
-        ...value[0],
-      });
+      setEditValue({ ...value[0] });
+      setEditType(type); // Set the edit type here
     } else {
       toast({
         title: "Computer not found",
@@ -65,6 +75,7 @@ function ComputersComponent() {
   };
 
   const handleComputerCreate = () => {
+    setEditType("computer");
     setEditValue(false);
     setOpen(true);
   };
@@ -76,7 +87,13 @@ function ComputersComponent() {
       <ModalContainer
         isOpen={open}
         setIsOpen={setOpen}
-        form={<ComputerForm setIsOpen={setOpen} values={editValue} />}
+        form={
+          editType === "computer" ? (
+            <ComputerForm setIsOpen={setOpen} values={editValue} />
+          ) : (
+            <ScheduleForm setIsOpen={setOpen} values={editValue} />
+          )
+        }
       />
 
       <Flex
@@ -138,14 +155,16 @@ function ComputersComponent() {
 
               <GridItem>
                 <Text fontSize="sm">
-                  {Object.keys(computer.schedule).join(", ")}
+                  {Object.keys(computer.schedule)
+                    .filter((day) => computer.schedule[day].length > 0)
+                    .join(", ")}
                 </Text>
               </GridItem>
 
               <GridItem>
                 <Tooltip label="Edit PC">
                   <IconButton
-                    onClick={() => handleEditClick(computer.id)}
+                    onClick={() => handleEditComputerClick(computer.id)}
                     size="sm"
                     icon={<MdEdit />}
                     mr={3}
@@ -153,7 +172,7 @@ function ComputersComponent() {
                 </Tooltip>
                 <Tooltip label="Edit Schedule">
                   <IconButton
-                    onClick={() => handleEditClick(computer.id)}
+                    onClick={() => handleEditScheduleClick(computer.id)}
                     size="sm"
                     icon={<MdEdit />}
                     mr={3}

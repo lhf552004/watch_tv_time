@@ -41,10 +41,11 @@ const ComputerForm = ({ setIsOpen, values }) => {
 
   async function onSubmit(values) {
     // if update
+    console.log(values);
     if (values.id) {
       try {
         const docRef = doc(firestore, `computers/${values.id}`);
-        await updateDoc(docRef, parsedStudyId);
+        await updateDoc(docRef, values);
         setIsOpen(false);
       } catch (error) {
         console.log(error);

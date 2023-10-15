@@ -3,7 +3,6 @@ import { FirebaseAppProvider } from "reactfire";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-
 // Chakra
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
@@ -17,7 +16,7 @@ const root = createRoot(document.getElementById("root"));
 
 root.render(
   <FirebaseAppProvider firebaseApp={app}>
-    <ChakraProvider resetCSS theme={customTheme}>
+    <ChakraProvider theme={customTheme}>
       <App />
     </ChakraProvider>
   </FirebaseAppProvider>

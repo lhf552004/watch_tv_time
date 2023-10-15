@@ -2,9 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Login from "./Login";
 import Main from "../layouts/Main";
+import About from "./About";
 
 import ComputersComponent from "../components/ComputersComponent";
 import Layout from "../layouts/Layout";
+import UsersComponent from "../components/UsersComponent";
 
 const routes = [
   {
@@ -16,15 +18,19 @@ const routes = [
     element: <Layout></Layout>,
     children: [
       {
+        path: "/",
+        element: <About />,
+      },
+      {
         path: "computers",
         element: <ComputersComponent />,
       },
+      {
+        path: "admin",
+        element: <UsersComponent />,
+      },
       // Add other child routes as needed
     ],
-  },
-  {
-    path: "admin",
-    element: <Main></Main>,
   },
 ];
 

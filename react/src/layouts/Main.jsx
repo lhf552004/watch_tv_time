@@ -1,5 +1,5 @@
 import { Flex, Box } from "@chakra-ui/react";
-import GlobalLoadingIndicator from "../components/GlobalLoadingIndicator";
+import GlobalLoadingIndicator from "../components/commons/GlobalLoadingIndicator";
 import AuthCheckContainer from "../containers/AuthCheckContainer";
 export default function Main({ menu, children }) {
   // TODO: Manage menu state width with zustand useStore and sync store with localStorage

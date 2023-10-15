@@ -16,7 +16,7 @@ const root = createRoot(document.getElementById("root"));
 
 root.render(
   <FirebaseAppProvider firebaseApp={app}>
-    <ChakraProvider theme={customTheme}>
+    <ChakraProvider resetCSS theme={customTheme}>
       <App />
     </ChakraProvider>
   </FirebaseAppProvider>

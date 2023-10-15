@@ -12,19 +12,35 @@ function Navbar({ children }) {
       alignItems="start"
     >
       <Box>
-        <Text color="white" fontSize="xl" fontWeight="bold">
+        <Link
+          as={RouterLink}
+          color="white"
+          fontSize="xl"
+          fontWeight="bold"
+          _hover={{ textDecoration: "underline" }}
+        >
           AuroraSoft
-        </Text>
-      </Box>
-      <RouterLink to="/computers">
-        <Link color="white" _hover={{ textDecoration: "underline" }}>
-          Computers
         </Link>
-      </RouterLink>
+      </Box>
+
+      <Link
+        as={RouterLink}
+        to="/computers"
+        color="white"
+        _hover={{ textDecoration: "underline" }}
+      >
+        Computers
+      </Link>
+
       {/* ...other links */}
       <Spacer />
 
-      <Link color="white" _hover={{ textDecoration: "underline" }}>
+      <Link
+        as={RouterLink}
+        to="/admin"
+        color="white"
+        _hover={{ textDecoration: "underline" }}
+      >
         User Management
       </Link>
       <Link color="white" _hover={{ textDecoration: "underline" }}>

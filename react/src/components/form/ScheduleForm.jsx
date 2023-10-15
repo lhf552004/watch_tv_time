@@ -57,9 +57,9 @@ function ScheduleForm({ setIsOpen, values }) {
       try {
         values = { ...values, schedule };
         console.log(values);
+        setIsOpen(false);
         const docRef = doc(firestore, `computers/${values.id}`);
         await updateDoc(docRef, values);
-        setIsOpen(false);
       } catch (error) {
         console.log(error);
       }

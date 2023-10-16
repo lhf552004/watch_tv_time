@@ -39,9 +39,9 @@ module.exports.getComputerByName = functions.https.onRequest((req, res) => {
 });
 
 module.exports.addNewUser = functions.https.onCall(async (data, context) => {
-  if (!context.auth.token.isAdmin) {
-    throw new functions.https.HttpsError("permission-denied");
-  }
+  // if (!context.auth.token.isAdmin) {
+  //   throw new functions.https.HttpsError("permission-denied");
+  // }
 
   const {
     displayName,

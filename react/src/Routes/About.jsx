@@ -26,8 +26,8 @@ export default function About() {
             alt="How to add time management period"
             boxSize="500px"
           />
-          <Text fontSize="sm">Figure: How to add time management periods.</Text>
         </Text>
+        <Text fontSize="sm">Figure: How to add time management periods.</Text>
       </Box>
 
       <Box>

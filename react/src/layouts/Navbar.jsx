@@ -5,6 +5,7 @@ import HideIfNotAdmin from "../components/auth/HideIfNotAdmin";
 import { useSigninCheck } from "reactfire";
 import LoginButton from "../components/auth/LoginButton";
 import Spinner from "../components/commons/Spinner";
+import SignupButton from "../components/auth/SignupButton";
 
 function Navbar({ children }) {
   const { status, data: signInCheckResult } = useSigninCheck();
@@ -56,7 +57,7 @@ function Navbar({ children }) {
       {isSignedIn === true ? (
         <Link
           as={RouterLink}
-          to="/login"
+          to="/"
           color="white"
           _hover={{ textDecoration: "underline" }}
         >
@@ -70,6 +71,16 @@ function Navbar({ children }) {
           _hover={{ textDecoration: "underline" }}
         >
           <LoginButton />
+        </Link>
+      )}
+      {isSignedIn === false && (
+        <Link
+          as={RouterLink}
+          to="/signup"
+          color="white"
+          _hover={{ textDecoration: "underline" }}
+        >
+          <SignupButton />
         </Link>
       )}
     </VStack>

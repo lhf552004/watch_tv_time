@@ -9,11 +9,16 @@ import Layout from "../layouts/Layout";
 import UsersComponent from "../components/UsersComponent";
 import ProtectedRoute from "./ProtectedRoute";
 import HideIfNotAdmin from "../components/auth/HideIfNotAdmin";
+import SignupForm from "../components/auth/SignupForm";
 
 const routes = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignupForm />,
   },
   {
     path: "/",

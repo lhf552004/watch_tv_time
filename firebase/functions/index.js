@@ -7,53 +7,6 @@ const db = admin.firestore();
 
 const cors = require("cors")({ origin: true });
 
-module.exports.getAllComputers = functions.https.onCall(
-  async (data, context) => {
-    try {
-      const snapshot = await db.collection("computers").get();
-      const records = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      return records;
-    } catch (error) {
-      throw new functions.https.HttpsError(
-        "internal",
-        "Error fetching records: " + error.toString()
-      );
-    }
-  }
-);
-
-module.exports.addComputer = functions.https.onCall(async (data, context) => {
-  try {
-    const { computerName, ipAddress, schedule } = data;
-
-    if (!computerName || !ipAddress || !schedule) {
-      throw new functions.https.HttpsError(
-        "invalid-argument",
-        "Please provide a valid computer name, IP address, and schedule."
-      );
-    }
-
-    const newRecord = await db.collection("computers").add({
-      computerName,
-      ipAddress,
-      schedule: schedule,
-    });
-
-    return { id: newRecord.id };
-  } catch (error) {
-    if (error instanceof functions.https.HttpsError) {
-      throw error;
-    }
-    throw new functions.https.HttpsError(
-      "internal",
-      "Error adding new record: " + error.toString()
-    );
-  }
-});
-
 module.exports.getComputerByName = functions.https.onRequest((req, res) => {
   return cors(req, res, async () => {
     try {
@@ -85,44 +38,6 @@ module.exports.getComputerByName = functions.https.onRequest((req, res) => {
   });
 });
 
-module.exports.updateComputers = functions.firestore
-  .document("/computers/{computer}")
-  .onUpdate(async (snapshot, context) => {
-    const { computer } = context.params;
-    const after = snapshot.after.data();
-
-    return {
-      status: "success",
-      message: `PC ${displayName} updated`,
-    };
-  });
-
-module.exports.deleteComputer = functions.https.onCall(
-  async (data, context) => {
-    try {
-      const recordId = data.id;
-
-      if (!recordId) {
-        throw new functions.https.HttpsError(
-          "invalid-argument",
-          "Please provide a valid record ID."
-        );
-      }
-
-      await db.collection("computers").doc(recordId).delete();
-
-      return { message: "Record deleted successfully." };
-    } catch (error) {
-      if (error instanceof functions.https.HttpsError) {
-        throw error;
-      }
-      throw new functions.https.HttpsError(
-        "internal",
-        "Error deleting record: " + error.toString()
-      );
-    }
-  }
-);
 module.exports.addNewUser = functions.https.onCall(async (data, context) => {
   if (!context.auth.token.isAdmin) {
     throw new functions.https.HttpsError("permission-denied");

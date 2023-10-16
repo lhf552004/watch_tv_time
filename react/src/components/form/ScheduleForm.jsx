@@ -6,6 +6,7 @@ import { useFirestore } from "reactfire";
 
 function ScheduleForm({ setIsOpen, values }) {
   const [schedule, setSchedule] = useState(values.schedule);
+  const toast = useToast();
   const firestore = useFirestore();
   useEffect(() => {
     // Ensure all days are present in the schedule
@@ -60,8 +61,16 @@ function ScheduleForm({ setIsOpen, values }) {
         setIsOpen(false);
         const docRef = doc(firestore, `computers/${values.id}`);
         await updateDoc(docRef, values);
+        toast({
+          title: "Update computer schedule successfully.",
+          status: "success",
+        });
       } catch (error) {
         console.log(error);
+        toast({
+          title: `Update computer schedule failed with error: ${error}`,
+          status: "error",
+        });
       }
       return;
     }

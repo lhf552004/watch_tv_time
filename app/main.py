@@ -9,8 +9,6 @@ import time
 # Load the .env file
 load_dotenv()
 
-GITHUB_RAW_URL = os.getenv('JSON_URL')
-
 BASE_URL = "https://us-central1-aurorasoft.cloudfunctions.net/getComputerByName"
 HEADERS = {
     "Content-Type": "application/json;charset=UTF-8",
@@ -19,7 +17,8 @@ HEADERS = {
 
 def fetch_json_from_firebase(computerName):
     data_payload = {
-        "computerName": computerName
+        "computerName": computerName,
+        "ownerId": os.getenv('ownerId')
     }
     
     response = requests.post(BASE_URL, json=data_payload, headers=HEADERS)

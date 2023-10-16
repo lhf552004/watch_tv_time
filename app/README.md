@@ -31,3 +31,6 @@ Copy dist/main.py and the .env to the folder
 1. Press Win + R to open the Run dialog.
 2. Type shell:startup and press Enter. This will open the Startup folder for the current user.
 3. Drag your .exe file (or a shortcut to your .exe file) into this folder.
+4. Create ".env" file along with the exe file, and enter your user uid like
+
+   `ownerId='Your user uid'`

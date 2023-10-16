@@ -9,8 +9,6 @@ import time
 # Load the .env file
 load_dotenv()
 
-GITHUB_RAW_URL = os.getenv('JSON_URL')
-
 BASE_URL = "https://us-central1-aurorasoft.cloudfunctions.net/getComputerByName"
 HEADERS = {
     "Content-Type": "application/json;charset=UTF-8",

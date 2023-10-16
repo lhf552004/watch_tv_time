@@ -134,7 +134,6 @@ module.exports.addNewUser = functions.https.onCall(async (data, context) => {
     phone: phoneNumber,
     organization,
     notes,
-    studies,
     isAdmin,
     password,
   } = data;
@@ -162,23 +161,23 @@ module.exports.addNewUser = functions.https.onCall(async (data, context) => {
     })
     .then(async (userRecord) => {
       const uid = userRecord.uid;
+      console.log("uid: " + uid);
       const userDoc = {
         email,
         displayName,
         phoneNumber,
         notes,
         organization,
-        studies,
       };
 
-      const claims = {
-        studies,
-      };
+      const claims = {};
 
       if (isAdmin) {
         userDoc["isAdmin"] = true;
         claims["isAdmin"] = true;
       }
+
+      console.log("start to create doc");
 
       await db.doc(`/users/${uid}`).set(userDoc);
 
@@ -199,10 +198,6 @@ module.exports.updateUser = functions.firestore
   .onUpdate(async (snapshot, context) => {
     const { user } = context.params;
     const after = snapshot.after.data();
-    const newStudies = after.studies;
-    const claims = {
-      studies: newStudies,
-    };
 
     if (after.isAdmin === true) {
       claims["isAdmin"] = true;
@@ -210,7 +205,7 @@ module.exports.updateUser = functions.firestore
 
     return admin.auth().setCustomUserClaims(user, claims);
 
-    // update user claims if isAdmin or studies has changed.
+    // update user claims if isAdmin has changed.
   });
 
 module.exports.disableUser = functions.https.onCall(async (data, context) => {

@@ -5,4 +5,5 @@ const theme = {
     brand: brand,
   },
 };
+
 export default theme;

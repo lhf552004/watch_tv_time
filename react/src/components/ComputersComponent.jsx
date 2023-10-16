@@ -15,11 +15,11 @@ import {
 } from "@chakra-ui/react";
 import { MdAdd, MdCheck, MdClose } from "react-icons/md";
 
-import Spinner from "./Spinner";
+import Spinner from "./commons/Spinner";
 import ModalContainer from "../containers/ModalContainer";
 import { MdCheckCircle, MdEdit } from "react-icons/md";
 import { IconButton } from "@chakra-ui/react";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmModal from "./commons/ConfirmModal";
 import ComputerForm from "./form/ComputerForm";
 import ScheduleForm from "./form/ScheduleForm";
 

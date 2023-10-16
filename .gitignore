@@ -4,3 +4,5 @@ dist/
 *.spec
 
 node_modules/
+
+react/yarn.lock

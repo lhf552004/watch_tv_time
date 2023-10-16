@@ -2,8 +2,14 @@ import { Box, Flex, Text, Link, VStack, Spacer } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import LogoutButton from "../components/auth/LogoutButton";
 import HideIfNotAdmin from "../components/auth/HideIfNotAdmin";
+import { useSigninCheck } from "reactfire";
+import LoginButton from "../components/auth/LoginButton";
+import Spinner from "../components/commons/Spinner";
 
 function Navbar({ children }) {
+  const { status, data: signInCheckResult } = useSigninCheck();
+  const isSignedIn = signInCheckResult && signInCheckResult.signedIn;
+
   return (
     <VStack
       as="nav"
@@ -24,15 +30,16 @@ function Navbar({ children }) {
           AuroraSoft
         </Link>
       </Box>
-
-      <Link
-        as={RouterLink}
-        to="/computers"
-        color="white"
-        _hover={{ textDecoration: "underline" }}
-      >
-        Computers
-      </Link>
+      {isSignedIn === true && (
+        <Link
+          as={RouterLink}
+          to="/computers"
+          color="white"
+          _hover={{ textDecoration: "underline" }}
+        >
+          Computers
+        </Link>
+      )}
 
       {/* ...other links */}
       <Spacer />
@@ -46,8 +53,25 @@ function Navbar({ children }) {
           User Management
         </Link>
       </HideIfNotAdmin>
-
-      <LogoutButton />
+      {isSignedIn === true ? (
+        <Link
+          as={RouterLink}
+          to="/login"
+          color="white"
+          _hover={{ textDecoration: "underline" }}
+        >
+          <LogoutButton />
+        </Link>
+      ) : (
+        <Link
+          as={RouterLink}
+          to="/login"
+          color="white"
+          _hover={{ textDecoration: "underline" }}
+        >
+          <LoginButton />
+        </Link>
+      )}
     </VStack>
   );
 }

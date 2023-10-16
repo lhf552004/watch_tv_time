@@ -7,6 +7,8 @@ import About from "./About";
 import ComputersComponent from "../components/ComputersComponent";
 import Layout from "../layouts/Layout";
 import UsersComponent from "../components/UsersComponent";
+import ProtectedRoute from "./ProtectedRoute";
+import HideIfNotAdmin from "../components/auth/HideIfNotAdmin";
 
 const routes = [
   {
@@ -23,11 +25,19 @@ const routes = [
       },
       {
         path: "computers",
-        element: <ComputersComponent />,
+        element: (
+          <ProtectedRoute>
+            <ComputersComponent />
+          </ProtectedRoute>
+        ), // Wrap protected routes with this
       },
       {
         path: "admin",
-        element: <UsersComponent />,
+        element: (
+          <HideIfNotAdmin>
+            <UsersComponent />
+          </HideIfNotAdmin>
+        ),
       },
       // Add other child routes as needed
     ],

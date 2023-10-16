@@ -1,8 +1,11 @@
-import { useFirestoreCollectionData, useFunctions } from "reactfire";
-import { httpsCallable } from "@firebase/functions";
+import {
+  useFirestoreCollectionData,
+  useFunctions,
+  useFirestore,
+  useUser,
+} from "reactfire";
+import { collection, doc, query, where, deleteDoc } from "firebase/firestore";
 import React, { useState } from "react";
-import { useFirestore } from "reactfire";
-import { collection } from "firebase/firestore";
 import {
   Flex,
   Button,
@@ -33,22 +36,32 @@ function ComputersComponent() {
   const firestore = useFirestore();
   const toast = useToast();
 
-  const permanmentlyDestroyUser = httpsCallable(functions, "deleteComputer");
+  const { data: user } = useUser();
 
+  // Create a query to fetch computers for the current user
   const computersRef = collection(firestore, "computers");
-  const { data: computers, status } = useFirestoreCollectionData(computersRef, {
+
+  const computersQuery = query(computersRef, where("ownerId", "==", user.uid));
+
+  // Fetch the data using the query
+  const { data: computers } = useFirestoreCollectionData(computersQuery, {
     idField: "id",
   });
 
+  // Delete a computer with id
   const handleComputerDelete = async (uid) => {
     try {
-      const response = await permanmentlyDestroyUser({ uid });
+      await deleteDoc(doc(firestore, "computers", uid));
       toast({
-        title: response.data.message,
-        status: response.data.status,
+        title: `Delete doc with id ${uid} successfully`,
+        status: "success",
       });
     } catch (error) {
       console.log(error);
+      toast({
+        title: `Delete doc with id ${uid} failed. with error: ${error}`,
+        status: "error",
+      });
     }
   };
 
@@ -180,7 +193,7 @@ function ComputersComponent() {
                 </Tooltip>
                 <ConfirmModal
                   tooltipLabel="Permanently Delete"
-                  destructiveFunction={() => handleComputerDelete(user.id)}
+                  destructiveFunction={() => handleComputerDelete(computer.id)}
                 />
               </GridItem>
             </Grid>

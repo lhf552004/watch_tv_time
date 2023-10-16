@@ -8,25 +8,14 @@ import {
   Switch,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useFunctions, useFirestore } from "reactfire";
-import { httpsCallable } from "@firebase/functions";
-import { doc, updateDoc } from "firebase/firestore";
+import { collection, doc, addDoc, updateDoc } from "firebase/firestore";
 import { useToast } from "@chakra-ui/react";
+import { useFirestore, useUser } from "reactfire";
 
 const ComputerForm = ({ setIsOpen, values }) => {
   const toast = useToast();
-  const functions = useFunctions();
   const firestore = useFirestore();
-  const addComputer = httpsCallable(functions, "addComputer");
-
-  const addComputerFn = async (formData) => {
-    try {
-      setIsOpen(false);
-      return await addComputer(formData);
-    } catch (error) {
-      toast({ title: "User could not be created", status: "error" });
-    }
-  };
+  const { data: user } = useUser();
 
   const {
     control,
@@ -45,24 +34,38 @@ const ComputerForm = ({ setIsOpen, values }) => {
     if (values.id) {
       try {
         const docRef = doc(firestore, `computers/${values.id}`);
-        await updateDoc(docRef, values);
         setIsOpen(false);
+        await updateDoc(docRef, values);
+        toast({
+          title: "Update computer successfully.",
+          status: "success",
+        });
       } catch (error) {
-        console.log(error);
+        toast({
+          title: `Update computer failed with error: ${error}`,
+          status: "error",
+        });
       }
       return;
     }
-    const emptySchedule = { ...values, schedule: {} };
-    console.log(emptySchedule);
-    // else we're creating
-    const response = await addComputerFn(emptySchedule);
 
-    if (response.data.status) {
+    try {
+      await addDoc(collection(firestore, "computers"), {
+        ...values,
+        schedule: {},
+        ownerId: user.uid, // Assuming each computer document should have the UID of its owner
+      });
       toast({
-        title: response.data.message,
-        status: response.data.status,
+        title: "Create computer successfully.",
+        status: "success",
+      });
+    } catch (error) {
+      toast({
+        title: `Create computer failed with error: ${error}`,
+        status: "error",
       });
     }
+    setIsOpen(false);
   }
 
   return (

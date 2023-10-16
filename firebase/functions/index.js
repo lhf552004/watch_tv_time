@@ -10,8 +10,7 @@ const cors = require("cors")({ origin: true });
 module.exports.getComputerByName = functions.https.onRequest((req, res) => {
   return cors(req, res, async () => {
     try {
-      console.log(req);
-      const { computerName } = req.body;
+      const { computerName, ownerId } = req.body;
       if (!computerName) {
         return res.status(400).send({
           error: "Please provide a computer name.",
@@ -21,6 +20,7 @@ module.exports.getComputerByName = functions.https.onRequest((req, res) => {
       const snapshot = await db
         .collection("computers")
         .where("computerName", "==", computerName)
+        .where("ownerId", "==", ownerId)
         .get();
 
       if (snapshot.empty) {

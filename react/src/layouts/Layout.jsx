@@ -14,7 +14,7 @@ import AuthCheckContainer from "../containers/AuthCheckContainer";
 
 function Layout({ children }) {
   return (
-    <Flex height="100%" w="100%" bg="gray.100">
+    <Flex minHeight="100vh" height="100%" w="100%" bg="gray.100">
       {/* Sidebar */}
       <Navbar />
       <Flex direction="column" width="100%">

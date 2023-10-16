@@ -19,7 +19,8 @@ HEADERS = {
 
 def fetch_json_from_firebase(computerName):
     data_payload = {
-        "computerName": computerName
+        "computerName": computerName,
+        "ownerId": os.getenv('ownerId')
     }
     
     response = requests.post(BASE_URL, json=data_payload, headers=HEADERS)

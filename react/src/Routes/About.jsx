@@ -36,7 +36,11 @@ export default function About() {
         </Heading>
         <Text>
           Ready to take control of your device usage time?
-          <Link href="/download-link-here" color="blue.500" isExternal>
+          <Link
+            href="https://github.com/lhf552004/watch_tv_time/releases"
+            color="blue.500"
+            isExternal
+          >
             Click here to download our software.
           </Link>
         </Text>

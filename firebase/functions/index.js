@@ -16,7 +16,7 @@ module.exports.getComputerByName = functions.https.onRequest((req, res) => {
           error: "Please provide a computer name.",
         });
       }
-
+      console.log(computerName)
       const snapshot = await db
         .collection("computers")
         .where("computerName", "==", computerName)
@@ -30,6 +30,22 @@ module.exports.getComputerByName = functions.https.onRequest((req, res) => {
       }
 
       const record = snapshot.docs[0];
+
+      const log_record = {
+        // Your data here, for example:
+        computerName: computerName,
+        computerId: record.id,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(), // If using Firestore
+      };
+      console.log(log_record);
+      try {
+        const writeResult = await admin.firestore().collection('records').add(log_record);
+        // response.json({ result: `Document with ID: ${writeResult.id} added.` });
+      } catch (error) {
+        console.error('Error adding document:', error);
+        response.status(500).send(error);
+      }
+      
       res.status(200).send({ id: record.id, ...record.data() });
     } catch (error) {
       console.error(error);

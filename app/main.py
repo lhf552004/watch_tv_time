@@ -5,6 +5,7 @@ import os
 import socket
 from dotenv import load_dotenv
 import time
+import platform
 
 # Load the .env file
 load_dotenv()
@@ -67,7 +68,13 @@ def main():
                 if should_shutdown(computers_data, computer_name):
                     print("Shutting down...")
                     # os.system('shutdown now -h')
-                    os.system('shutdown /s /t 1')
+                    # os.system('shutdown /s /t 1')
+                    if platform.system() == "Windows":
+                        os.system("shutdown /s /t 1")  # Shutdown Windows
+                    elif platform.system() == "Linux":
+                        os.system("sudo shutdown now")  # Shutdown Linux (including Ubuntu)
+                    else:
+                        print("Unsupported Operating System")
                 print("PC is not shutdown, end.")
             
             time.sleep(60)  # wait for 60 seconds (1 minute) before checking again

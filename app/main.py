@@ -72,7 +72,7 @@ def main():
                     if platform.system() == "Windows":
                         os.system("shutdown /s /t 1")  # Shutdown Windows
                     elif platform.system() == "Linux":
-                        os.system("sudo shutdown now")  # Shutdown Linux (including Ubuntu)
+                        os.system("shutdown now")  # Shutdown Linux (including Ubuntu)
                     else:
                         print("Unsupported Operating System")
                 print("PC is not shutdown, end.")

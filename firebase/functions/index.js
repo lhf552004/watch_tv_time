@@ -45,7 +45,7 @@ module.exports.getComputerByName = functions.https.onRequest((req, res) => {
         console.error('Error adding document:', error);
         response.status(500).send(error);
       }
-      
+
       res.status(200).send({ id: record.id, ...record.data() });
     } catch (error) {
       console.error(error);
@@ -54,7 +54,7 @@ module.exports.getComputerByName = functions.https.onRequest((req, res) => {
   });
 });
 
-module.exports.scheduledLogCleanup = functions.pubsub.schedule('every 24 hours').timeZone('Your-Time-Zone').onRun((context) => {
+module.exports.scheduledLogCleanup = functions.pubsub.schedule('every 24 hours').onRun((context) => {
   const db = admin.firestore();
   const logCollection = db.collection('records');
 

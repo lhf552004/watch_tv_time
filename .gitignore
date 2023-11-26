@@ -8,3 +8,5 @@ node_modules/
 react/yarn.lock
 
 .env
+
+__pycache__

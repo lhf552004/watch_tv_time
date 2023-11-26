@@ -1,0 +1,9 @@
+Caught an exception: HTTPSConnectionPool(host='us-central1-aurorasoft.cloudfunctions.net', port=443): Max retries exceeded with url: /getComputerByName (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f1db5347610>: Failed to resolve 'us-central1-aurorasoft.cloudfunctions.net' ([Errno -3] Temporary failure in name resolution)"))
+YawenPC
+Caught an exception: HTTPSConnectionPool(host='us-central1-aurorasoft.cloudfunctions.net', port=443): Max retries exceeded with url: /getComputerByName (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f1db54d3010>: Failed to resolve 'us-central1-aurorasoft.cloudfunctions.net' ([Errno -3] Temporary failure in name resolution)"))
+YawenPC
+Caught an exception: HTTPSConnectionPool(host='us-central1-aurorasoft.cloudfunctions.net', port=443): Max retries exceeded with url: /getComputerByName (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f1db54d3160>: Failed to resolve 'us-central1-aurorasoft.cloudfunctions.net' ([Errno -3] Temporary failure in name resolution)"))
+YawenPC
+Caught an exception: HTTPSConnectionPool(host='us-central1-aurorasoft.cloudfunctions.net', port=443): Max retries exceeded with url: /getComputerByName (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f1db54d27d0>: Failed to resolve 'us-central1-aurorasoft.cloudfunctions.net' ([Errno -3] Temporary failure in name resolution)"))
+YawenPC
+Caught an exception: HTTPSConnectionPool(host='us-central1-aurorasoft.cloudfunctions.net', port=443): Max retries exceeded with url: /getComputerByName (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x7f1db54d25f0>: Failed to resolve 'us-central1-aurorasoft.cloudfunctions.net' ([Errno -3] Temporary failure in name resolution)"))

@@ -3,9 +3,9 @@ import json
 import datetime
 import os
 import socket
-from app.LinuxHandler import LinuxHandler
-from app.OSHandler import OSHandler
-from app.WindowsHandler import WindowsHandler
+from src.LinuxHandler import LinuxHandler
+from src.OSHandler import OSHandler
+from src.WindowsHandler import WindowsHandler
 from dotenv import load_dotenv
 import time
 import platform
@@ -19,12 +19,13 @@ HEADERS = {
     # Include any other headers like Authorization if needed
 }
 
+
 def fetch_json_from_firebase(computerName):
     data_payload = {
         "computerName": computerName,
         "ownerId": os.getenv('ownerId')
     }
-    
+
     response = requests.post(BASE_URL, json=data_payload, headers=HEADERS)
 
     if response.status_code == 200:
@@ -41,11 +42,13 @@ def fetch_json_from_github(url):
     response.raise_for_status()
     return response.json()
 
+
 def is_time_within_period(start, end, check_time):
     start_time = datetime.datetime.strptime(start, "%H:%M").time()
     end_time = datetime.datetime.strptime(end, "%H:%M").time()
     print(f"start: {start_time} end: {end_time} check_time: {check_time}")
     return start_time <= check_time <= end_time
+
 
 def should_block(computers_data, computer_name):
     current_time = datetime.datetime.now().time()
@@ -54,22 +57,23 @@ def should_block(computers_data, computer_name):
     print(f"Current_time: {current_time}")
     todays_schedule = computers_data['schedule'].get(current_day, [])
     for period in todays_schedule:
-         if is_time_within_period(period['startTime'], period['endTime'], current_time):
+        if is_time_within_period(period['startTime'], period['endTime'], current_time):
             return True
     print("The time is not in schedule.")
     return False
+
 
 def main():
     if platform.system() == "Windows":
         osHandler = WindowsHandler()
         processes_to_allow = {
-        'Wechat': r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
-    }
+            'Wechat': r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
+        }
     elif platform.system() == "Linux":
         osHandler = LinuxHandler()
         processes_to_allow = {
-        'Slack': '/path/to/slack'
-    }
+            'Slack': '/path/to/slack'
+        }
     else:
         print("Unsupported Operating System")
         exit(1)
@@ -84,12 +88,23 @@ def main():
             if computers_data != None:
                 if should_block(computers_data, computer_name):
                     print("To block...")
-                    osHandler.allowOnlyApp(processes_to_allow)
-                print("PC is not shutdown, end.")
-            
-            time.sleep(60)  # wait for 60 seconds (1 minute) before checking again
+                    if osHandler.isBlocked() == False:
+                        osHandler.allowOnlyApp(processes_to_allow)
+                        print("Blocked successfully.")
+                    else:
+                        print("Alreay blocked")
+                else:
+                    if osHandler.isBlocked():
+                        osHandler.allowAllApp()
+                        print("Allow all app.")
+                    else:
+                        print("No need to unblocke.")
+
+            # wait for 60 seconds (1 minute) before checking again
+            time.sleep(60)
         except Exception as e:
-            print(f"Caught an exception: {e}")    
+            print(f"Caught an exception: {e}")
+
 
 if __name__ == "__main__":
     main()

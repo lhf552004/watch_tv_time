@@ -3,6 +3,9 @@ import json
 import datetime
 import os
 import socket
+from app.LinuxHandler import LinuxHandler
+from app.OSHandler import OSHandler
+from app.WindowsHandler import WindowsHandler
 from dotenv import load_dotenv
 import time
 import platform
@@ -44,7 +47,7 @@ def is_time_within_period(start, end, check_time):
     print(f"start: {start_time} end: {end_time} check_time: {check_time}")
     return start_time <= check_time <= end_time
 
-def should_shutdown(computers_data, computer_name):
+def should_block(computers_data, computer_name):
     current_time = datetime.datetime.now().time()
     current_day = datetime.datetime.now().strftime('%A')
     print(f"Current_day: {current_day}")
@@ -57,6 +60,20 @@ def should_shutdown(computers_data, computer_name):
     return False
 
 def main():
+    if platform.system() == "Windows":
+        osHandler = WindowsHandler()
+        processes_to_allow = {
+        'Wechat': r"C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
+    }
+    elif platform.system() == "Linux":
+        osHandler = LinuxHandler()
+        processes_to_allow = {
+        'Slack': '/path/to/slack'
+    }
+    else:
+        print("Unsupported Operating System")
+        exit(1)
+
     while True:
         try:
             computer_name = socket.gethostname()
@@ -65,16 +82,9 @@ def main():
             computers_data = fetch_json_from_firebase(computer_name)
             print(computers_data)
             if computers_data != None:
-                if should_shutdown(computers_data, computer_name):
-                    print("Shutting down...")
-                    # os.system('shutdown now -h')
-                    # os.system('shutdown /s /t 1')
-                    if platform.system() == "Windows":
-                        os.system("shutdown /s /t 1")  # Shutdown Windows
-                    elif platform.system() == "Linux":
-                        os.system("shutdown now")  # Shutdown Linux (including Ubuntu)
-                    else:
-                        print("Unsupported Operating System")
+                if should_block(computers_data, computer_name):
+                    print("To block...")
+                    osHandler.allowOnlyApp(processes_to_allow)
                 print("PC is not shutdown, end.")
             
             time.sleep(60)  # wait for 60 seconds (1 minute) before checking again

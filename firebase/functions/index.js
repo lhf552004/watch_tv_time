@@ -54,6 +54,28 @@ module.exports.getComputerByName = functions.https.onRequest((req, res) => {
   });
 });
 
+module.exports.scheduledLogCleanup = functions.pubsub.schedule('every 24 hours').timeZone('Your-Time-Zone').onRun((context) => {
+  const db = admin.firestore();
+  const logCollection = db.collection('records');
+
+  // Delete logs older than a certain date
+  const cutoffDate = new Date();
+  cutoffDate.setDate(cutoffDate.getDate() - 30); // Delete logs older than 30 days
+
+  const batch = db.batch();
+  return logCollection.where('timestamp', '<', cutoffDate).get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+      return batch.commit();
+    })
+    .catch(error => {
+      console.error('Error deleting logs:', error);
+      return null;
+    });
+});
+
 module.exports.addNewUser = functions.https.onCall(async (data, context) => {
   // if (!context.auth.token.isAdmin) {
   //   throw new functions.https.HttpsError("permission-denied");

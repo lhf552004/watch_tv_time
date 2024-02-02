@@ -1,0 +1,22 @@
+name: Deploy Backend to Firebase
+
+on:
+  push:
+    branches:
+      - main # or your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Build and Deploy
+        run: |
+          cd firebase  # navigate to your backend directory
+          npm install
+          firebase deploy --only functions --token ${{ secrets.FIREBASE_TOKEN }}

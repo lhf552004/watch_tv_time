@@ -1,5 +1,7 @@
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 ![GitHub last commit](https://img.shields.io/github/last-commit/lhf552004/watch_tv_time)
+https://img.shields.io/github/commits-difference/lhf552004/watch_tv_time/1.2.1...a9835cd?style=:style&logo=:logo&logoColor=:logoColor&label=:label&labelColor=:labelColor&color=:color&cacheSeconds=:cacheSeconds
+
 ![GitHub commits difference between two branches/tags/commits](https://img.shields.io/github/commits-difference/lhf552004/watch_tv_time)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lhf552004/watch_tv_time/cloudflare_deploy.yml)
 

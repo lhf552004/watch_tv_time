@@ -1,3 +1,5 @@
+[![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+![GitHub last commit](https://img.shields.io/github/last-commit/lhf552004/watch_tv_time)
 ## Watch TV Time Admin
 
 ### Computer Maintaince website
